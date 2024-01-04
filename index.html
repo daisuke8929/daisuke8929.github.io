@@ -371,7 +371,7 @@
 				</div>
 
 				<div class="col-md-6 to-animate">
-					<form action="https://shcomdev.sakura.ne.jp/mail.php" method="post" accept-charset="utf-8">
+					<form id="form" action="https://shcomdev.sakura.ne.jp/mail.php" method="post" accept-charset="utf-8">
 					<h3>Contact Form</h3>
 					<div class="form-group ">
 						<label for="name" class="sr-only">Name</label>
@@ -390,7 +390,7 @@
 						<textarea name="messaggio" id="messaggio" cols="30" rows="5" class="form-control" placeholder="Message" required></textarea>
 					</div>
 					<div class="form-group ">
-						<input class="btn-primary btn-lg" value="Send Message" type="submit">
+						<input id="submit-button" class="btn-primary btn-lg" value="Send Message" type="button">
 					</div>
 					</div>
 					</form>					
@@ -497,6 +497,25 @@
 			$('.option-toggle').click(function() {
 				$('#colour-variations').toggleClass('sleep');
 			});
+			const form = document.getElementById("form")
+			const submitButton = document.getElementById("submit-button")
+
+			submitButton.onclick = () => {
+				const formData = new FormData(form)
+				const action = form.getAttribute("action")
+				const options = {
+					mode: 'no-cors',
+					method: 'POST',
+					body: formData,
+				}
+				fetch(action, options).then((e) => {
+					if(e.status === 200) {
+						alert("メールを送信しました。")
+						return
+					}
+					alert("メールを送信しました。")
+				})
+			}
 		});
 	</script>
 	<!-- End demo purposes only -->
